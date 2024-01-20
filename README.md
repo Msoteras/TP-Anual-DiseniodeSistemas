@@ -1,2 +1,8 @@
-# TP-Anual-DiseniodeSistemas
-Trabajo Práctico Diseño de Sistemas UTN-FRBA 2023
+
+# Grupo 05 - Entrega FINAL TP ANUAL 
+# Integrantes: 
+- Alberio, Valentina
+- Gobbi, Micaela
+- Larocca, Florencia
+- Sandoval, Aylen
+- Soteras, Martina

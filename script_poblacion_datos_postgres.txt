@@ -1,0 +1,165 @@
+
+select* from permiso
+
+
+INSERT INTO permiso (id, nombre, nombreInterno) VALUES
+(1, 'Reportar incidentes en comunidad', 'reportar_incidentes'),
+(2, 'Cerrar incidentes', 'cerrar_incidentes'),
+(3, 'Ver incidentes en comunidad', 'ver_incidentes'),
+(4, 'Editar comunidad', 'editar_comunidad'),
+(5, 'Ver miembros de una comunidad', 'ver_participantes'),
+(6, 'Validar publicaciones de los miembros de la comunidad', 'controlar_miembros'),
+(7, 'Designar servicios de interés para la comunidad', 'registrar_servicios'),
+(8, 'Cargar archivo CSV', 'cargar_csv'),
+(9, 'Crear comunidades', 'crear_comunidades'),
+(10, 'Ver rankings', 'ver_rankings_entidades');
+
+-- ROLES
+-- Usuario Superadmin
+INSERT INTO rol(id, nombre, tipo)
+VALUES (1, 'Superadmin', 'SUPERADMINISTRADOR');
+
+UPDATE rol SET tipo = 'SUPERADMINISTRADOR' WHERE id = 1;
+
+-- Asignar permisos al Usuario Superadmin
+INSERT INTO rol_permiso(rol_id, permisos_id)
+VALUES (1, 1), (1, 2), (1, 3), (1, 4), (1, 5), (1, 6), (1, 7), (1, 8), (1, 9), (1, 10);
+
+-- Usuario Designado de Control
+INSERT INTO rol(id, nombre, tipo)
+VALUES (2, 'DesignadoDeControl', 'ADMINISTRADOR');
+
+-- Asignar permisos al Usuario Designado de Control
+INSERT INTO rol_permiso(rol_id, permisos_id)
+VALUES (2, 1), (2, 2), (2, 3), (2, 4), (2, 7), (2, 8), (2, 10);
+
+-- Crear Usuario Superadmin
+INSERT INTO usuario(id, contrasenia, email, nombreDeUsuario)
+VALUES (100, 'superadmin', 'superadmin@gmail.com', 'superadmin');
+
+-- Asignar rol al Usuario Superadmin
+INSERT INTO usuario_rol(usuario_id, roles_id)
+VALUES (100, 1);
+
+select* from servicio
+-- CREO SERVICIOS
+INSERT INTO servicio(id, descripcion, tipoDeServicio)
+VALUES (1,'Baño de mujeres', 'Baño'),
+       (2,'Baño de hombres', 'Baño'),
+       (3,'Ascensor', 'Ascensor'),
+       (4, 'Escalera mecánica', 'Escalera mecánica'),
+       (5, 'Rampa', 'Rampa'),
+       (6, 'Baño de discapacitados', 'Baño');
+
+-- Crear Prestadoras de Servicio
+INSERT INTO prestadora_de_servicio (id, nombre)
+VALUES (1, 'UTN'), (2, 'Trenes Argentinos'), (3, 'UBA');
+
+-- Crear Entidades
+INSERT INTO entidad (id, nombre, prestadora_de_servicio_id)
+VALUES (1,'Sede BA - Medrano', 1),
+       (2, 'Sede BA - Campus', 1),
+       (3, 'Sede FIUBA - Paseo Colon', 3),
+       (4, 'Línea Roca', 2),
+       (5,'Línea Belgrano Sur', 2),
+       (6,'Línea Sarmiento', 2),
+       (7,'Línea Mitre', 2),
+       (8,'Línea San Martin', 2),
+       (9,'Sede Avellaneda', 1);
+
+      select* from establecimiento e
+
+INSERT INTO establecimiento (id, nombre, lat, lon, entidad_id) VALUES
+    (1,'Planta baja Sede Medrano', -34.59887, -58.42015, 1),
+    (2,'Buffet Albert Einstein Sede Medrano', -34.59887, -58.42015, 1),
+    (3,'Primer piso Sede Campus', -34.6599705, -58.4681958, 2),
+    (4,'Planta baja Sede FIUBA Paseo Colon', -34.617639, -58.368056, 3),
+    (5,'Estación Banfield', -34.7439168, -58.3958758, 4),
+    (6,'Estación Lozano', -34.5560549, -58.6694303, 5),
+    (7,'Estación Once', -34.6104983, -58.4133019, 6),
+    (8,'Estación Merlo', -34.6634776, -58.7273416, 6),
+    (9,'Estación Belgrano R', -34.5688959, -58.4610736, 7),
+    (10,'Estación Retiro - Mitre', -34.5894, -58.37318, 7),
+    (11,'Estación Retiro - San Martin', -34.5894, -58.37318, 8),
+    (12,'Planta Baja - Avellaneda', -34.6623821, -58.3645907, 8);
+
+-- Crear prestaciones de servicio
+-- Baños de Mujeres
+INSERT INTO prestacion_de_servicio (id, establecimiento_id, servicio_id, nombre) VALUES
+    (13, 1, 2, 'Baño de hombres en planta baja Sede Medrano'),
+    (14, 2, 2, 'Baño de hombres en el buffet de la Sede Medrano'),
+    (15, 3, 2, 'Baño de hombres en planta baja Sede Campus'),
+    (16, 4, 2, 'Baño de hombres en FIUBA Paseo Colon'),
+    (17, 5, 2, 'Baño de hombres en Estacion Banfield'),
+    (18, 6, 2, 'Baño de hombres en Estacion Lozano'),
+    (19, 7, 2, 'Baño de hombres en Estacion Once'),
+    (20, 8, 2, 'Baño de hombres en Estacion Merlo'),
+    (21, 9, 2, 'Baño de hombres en Estacion Belgrano R'),
+    (22, 10, 2, 'Baño de hombres en Estacion Retiro - Linea Mitre'),
+    (23, 11, 2, 'Baño de hombres en Estacion Retiro - Linea San Martin'),
+    (24, 12, 2, 'Baño de hombres en UTN Sede Avellaneda');
+
+INSERT INTO prestacion_de_servicio (id, establecimiento_id, servicio_id, nombre) VALUES
+    (25, 1, 3, 'Ascensor en planta baja Sede Medrano'),
+    (26, 3, 3, 'Ascensor en planta baja Sede Campus'),
+    (27, 4, 3, 'Ascensor en FIUBA Paseo Colon');
+
+-- Escalera mecánica
+INSERT INTO prestacion_de_servicio (id, establecimiento_id, servicio_id, nombre) VALUES
+    (28, 10, 4, 'Escaleras en Estacion Retiro - Linea Mitre'),
+    (29, 11, 4, 'Escaleras en Estacion Retiro - Linea San Martin');
+
+-- Rampa
+INSERT INTO prestacion_de_servicio (id, establecimiento_id, servicio_id, nombre) VALUES
+    (30, 1, 5, 'Rampa en planta baja Sede Medrano'),
+    (31, 3, 5, 'Rampa en planta baja Sede Campus'),
+    (32, 5, 5, 'Rampa en Estacion Banfield'),
+    (33, 6, 5, 'Rampa en Estacion Lozano'),
+    (34, 7, 5, 'Rampa en Estacion Once'),
+    (35, 8, 5, 'Rampa en Estacion Merlo'),
+    (36, 9, 5, 'Rampa en Estacion Belgrano R'),
+    (37, 10, 5, 'Rampa en Estacion Retiro - Linea Mitre'),
+    (38, 11, 5, 'Rampa en Estacion Retiro - Linea San Martin'),
+    (39, 12, 5, 'Rampa en UTN Sede Avellaneda');
+
+-- Baño para discapacitados
+INSERT INTO prestacion_de_servicio (id, establecimiento_id, servicio_id, nombre) VALUES
+    (40, 3, 6, 'Baño para discapacitados en planta baja Sede Campus'),
+    (41, 4, 6, 'Baño para discapacitados en FIUBA Paseo Colon'),
+    (42, 5, 6, 'Baño para discapacitados en Estacion Banfield'),
+    (43, 6, 6, 'Baño para discapacitados en Estacion Lozano'),
+    (44, 7, 6, 'Baño para discapacitados en Estacion Once'),
+    (45, 8, 6, 'Baño para discapacitados en Estacion Merlo'),
+    (46, 9, 6, 'Baño para discapacitados en Estacion Belgrano R'),
+    (47, 10, 6, 'Baño para discapacitados en Estacion Retiro - Linea Mitre'),
+    (48, 11, 6, 'Baño para discapacitados en Estacion Retiro - Linea San Martin'),
+    (49, 12, 6, 'Baño para discapacitados en UTN Sede Avellaneda');
+
+-- Crear comunidades
+INSERT INTO comunidad (id, nombre, descripcion) VALUES
+    (1,'UTNIANOS', 'Alumnos de la UTN'),
+    (2,'FIUBA', 'Alumnos de la UBA'),
+    (3,'Diseñadoras, pero no graficas', 'Las integrantes de este grupo'),
+    (4,'Cosas del Roca', 'Información del estado de la línea Roca'),
+    (5, 'Comunidad Retiro', 'Viajeros que en su recorrido transitan Retiro');
+
+-- Añadir servicios de interés a comunidades
+INSERT INTO comunidad_prestacion_de_servicio (comunidad_id, serviciosDeInteres_id) VALUES
+    (1, 1), (1, 13), (1, 25), (1, 30), (1, 2), (1, 14), (1, 3), (1, 15), (1, 26), (1, 31),
+    (1, 40), (1, 12), (1, 24), (1, 39), (1, 49);
+
+INSERT INTO comunidad_prestacion_de_servicio (comunidad_id, serviciosDeInteres_id) VALUES
+    (2, 4), (2, 16), (2, 27), (2, 41);
+
+INSERT INTO comunidad_prestacion_de_servicio (comunidad_id, serviciosDeInteres_id) VALUES
+    (3, 5), (3, 6), (3, 7), (3, 8), (3, 9), (3, 17), (3, 18), (3, 19), (3, 20), (3, 21),
+    (3, 32), (3, 34), (3, 35), (3, 36), (3, 42), (3, 43), (3, 44), (3, 45), (3, 46);
+
+INSERT INTO comunidad_prestacion_de_servicio (comunidad_id, serviciosDeInteres_id) VALUES
+    (4, 5), (4, 17), (4, 32), (4, 42);
+
+INSERT INTO comunidad_prestacion_de_servicio (comunidad_id, serviciosDeInteres_id) VALUES
+    (5, 10), (5, 11), (5, 22), (5, 23), (5, 28), (5, 29), (5, 37), (5, 38), (5, 47), (5, 48);
+
+-- Actualizar prestacion_de_servicio para habilitar servicios
+UPDATE prestacion_de_servicio SET estaHabilitado = TRUE WHERE estaHabilitado IS NULL AND id < 50;
